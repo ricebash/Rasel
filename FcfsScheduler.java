@@ -1,4 +1,5 @@
-public class FcfsScheduler
+import java.util.*;
+public class FcfsScheduler implements DiskScheduler
 {
 	public List <Request> requests;
 	public int start = 0; 
@@ -9,6 +10,7 @@ public class FcfsScheduler
 	public FcfsScheduler(int head)
 	{
 		this.head = head;
+		sched = new DiskSchedule();
 	}
 	
 	public void addRequest(int arrivalTime, int cylinderAddress)
@@ -19,19 +21,20 @@ public class FcfsScheduler
 
 	public DiskSchedule computeSchedule()
 	{
-		for(int i = 0; i <= start; i++);
+		for(int i = 0; i <= start; i++)
 		{
-			if(request.get(i).address > head)
+			if(requests.get(i).address > head)
 			{
-				totalTime += request.get(i).address - head;
-				head = request.get(i).address;
+				totalTime += requests.get(i).address - head;
+				head = requests.get(i).address;
 			}
 			else
 			{
-				totalTime += head - request.get(i).address;
-				head = request.get(i).address;
+				totalTime += head - requests.get(i).address;
+				head = requests.get(i).address;
 			}
-			sched.addServed(request.get(i),totalTime);
+			sched.addServed(requests.get(i),totalTime);
 		}
+		return sched;
 	}
 }

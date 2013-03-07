@@ -1,13 +1,13 @@
-pubclic class SchedulerFactory {
+public class SchedulerFactory {
 	public static DiskScheduler createScheduler(String code,int headAddress){
 		if( code.equals("FCFS") ){
-			return new FcfsScheduler(int head);//you can create your object however you want, of course.
+			return new FcfsScheduler(headAddress);
 		}else if ( code.equals("SSTF")) {
-			return new SstfScheduler(int head);
+			return new SstfScheduler(headAddress);
 		}else if ( code.equals("SCAN")) {
-			return new ScanScheduler(int head);
+			return new ScanScheduler(headAddress);
 		}else if ( code.equals("LOOK")) {
-			return new LookScheduler(int head);
+			return new LookScheduler(headAddress);
 		} 
 		/* BONUS
 		else if (code.equals("CSCAN")){

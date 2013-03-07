@@ -1,4 +1,5 @@
-public class ScanScheduler
+import java.util.*;
+public class ScanScheduler implements DiskScheduler
 {
 	public List <Request> requests;
 	public int start = 0; 
@@ -6,9 +7,11 @@ public class ScanScheduler
 	public DiskSchedule sched;
 	public int head;
 	
-	public FcfsScheduler(int head)
+	public ScanScheduler(int head)
 	{
 		this.head = head;
+		
+		sched = new DiskSchedule();
 	}
 	
 	public void addRequest(int arrivalTime, int cylinderAddress)
@@ -40,8 +43,8 @@ public class ScanScheduler
 			}
 			else
 			{
-				int getIndex;
-				for( int j = 0; j< arrived.size; j++)
+				int getIndex = 0;
+				for( int j = 0; j< arrived.size(); j++)
 				{
 					int index = arrived.get(j);
 					if(ascend)
@@ -66,7 +69,7 @@ public class ScanScheduler
 				if(go = true)
 				{
 					totalTime += closest;			
-					sched.addServed(request.get(getIndex),totalTime);
+					sched.addServed(requests.get(getIndex),totalTime);
 					requests.remove(getIndex);
 				}
 				else
@@ -75,5 +78,6 @@ public class ScanScheduler
 				}
 			}
 		}
+		return sched;
 	}
 }

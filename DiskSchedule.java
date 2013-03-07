@@ -1,7 +1,11 @@
+import java.util.*;
 public class DiskSchedule
 {
 	public List<ServicedRequest> served;
 	public int totalResponseTime;
+	
+	public DiskSchedule()
+	{}
 	
 	public void addServed(Request req,int time)
 	{

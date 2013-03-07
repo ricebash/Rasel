@@ -1,4 +1,5 @@
-public class SstfScheduler
+import java.util.*;
+public class SstfScheduler implements DiskScheduler
 {
 	public List <Request> requests;
 	public int start = 0; 
@@ -6,9 +7,11 @@ public class SstfScheduler
 	public DiskSchedule sched;
 	public int head;
 	
-	public FcfsScheduler(int head)
+	public SstfScheduler(int head)
 	{
 		this.head = head;
+		
+		sched = new DiskSchedule();
 	}
 	
 	public void addRequest(int arrivalTime, int cylinderAddress)
@@ -19,6 +22,6 @@ public class SstfScheduler
 
 	public DiskSchedule computeSchedule()
 	{
-	
+		return sched;
 	}
 }

@@ -3,12 +3,18 @@ public class ServicedRequest
 	private int id;
 	private int time;
 	
+	public ServicedRequest(int id, int time)
+	{
+		this.id = id;
+		this.time = time;
+	}
+	
 	public int getRequestId()
 	{
 		return id;
 	}
 	
-	public int setRequestId(int id)
+	public void setRequestId(int id)
 	{
 		this.id = id;
 	}
@@ -18,7 +24,7 @@ public class ServicedRequest
 		return id;
 	}
 	
-	public int setTime(int time)
+	public void setTime(int time)
 	{
 		this.time = time;
 	}

@@ -1,23 +1,23 @@
 import java.io.*;
-
+import java.util.*;
 public class ScheduleDisks
 {
-	public static void main(String args[])
+	public static void main(String args[]) throws IOException
 	{
-		public SchedulerFactory factory = new SchedulerFactory();
-		public DiskScheduler sched;
+		SchedulerFactory factory = new SchedulerFactory();
+		DiskScheduler sched;
 		Scanner sc = new Scanner(new FileReader("io-requests.txt"));
 		while(true)
 		{
 			String input = sc.nextLine();
-			if(input.equals("END 0")
+			if(input.equals("END 0"))
 			{
 				break;
 			}
 			else
 			{
-				List<Pair> pairs = new List<Pair>();
-				public DiskSchedule order;
+				List<Pair> pairs = new ArrayList<Pair>();
+				DiskSchedule order;
 				List<ServicedRequest> printable;
 				String [] request = input.split(" ");
 				int head = Integer.parseInt(request[1]);
@@ -26,10 +26,10 @@ public class ScheduleDisks
 				for(int i = 0; i < numRequest; i++)
 				{
 					String temp = sc.nextLine();
-					input = temp.split(" ");
-					int arrive = Integer.parseInt(input[0]);
-					int address = Integer.parseInt(input[1]);
-					pairs.add(arrive,address);
+					String temp2 [] = temp.split(" ");
+					int arrive = Integer.parseInt(temp2[0]);
+					int address = Integer.parseInt(temp2[1]);
+					pairs.add(new Pair(arrive,address));
 				}
 				Collections.sort(pairs,new ArrivalComparator());
 				for(int i = 0; i < numRequest; i++)
@@ -42,7 +42,7 @@ public class ScheduleDisks
 				{
 					System.out.print("R" + printable.get(i).getRequestId() + " " + printable.get(i).timeServiced() + " ");
 				}
-				System.out.print("\n" + order.averageResponseTime + "\n");
+				System.out.print("\n" + order.averageResponseTime() + "\n");
 			}
 		}
 	}
