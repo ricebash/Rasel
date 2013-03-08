@@ -21,7 +21,7 @@ public class ServicedRequest
 	
 	public int timeServiced()
 	{
-		return id;
+		return time;
 	}
 	
 	public void setTime(int time)

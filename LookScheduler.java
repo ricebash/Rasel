@@ -1,7 +1,7 @@
 import java.util.*;
 public class LookScheduler implements DiskScheduler
 {
-	public List <Request> requests;
+	public List <Request> requests= new ArrayList<Request>();
 	public int start = 0; 
 	public int totalTime = 0;
 	public DiskSchedule sched;

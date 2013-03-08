@@ -1,7 +1,7 @@
 import java.util.*;
 public class DiskSchedule
 {
-	public List<ServicedRequest> served;
+	public List<ServicedRequest> served = new ArrayList<ServicedRequest>();
 	public int totalResponseTime;
 	
 	public DiskSchedule()

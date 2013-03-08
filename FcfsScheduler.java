@@ -1,7 +1,7 @@
 import java.util.*;
 public class FcfsScheduler implements DiskScheduler
 {
-	public List <Request> requests;
+	public ArrayList <Request> requests = new ArrayList<Request>();
 	public int start = 0; 
 	public int totalTime = 0;
 	public DiskSchedule sched;
@@ -15,13 +15,14 @@ public class FcfsScheduler implements DiskScheduler
 	
 	public void addRequest(int arrivalTime, int cylinderAddress)
 	{
-		requests.add(new Request(start,arrivalTime,cylinderAddress));
+		Request temp = new Request(start,arrivalTime,cylinderAddress);
+		requests.add(temp);
 		start++;
 	}
 
 	public DiskSchedule computeSchedule()
 	{
-		for(int i = 0; i <= start; i++)
+		for(int i = 0; i < start; i++)
 		{
 			if(requests.get(i).address > head)
 			{

@@ -29,7 +29,8 @@ public class ScheduleDisks
 					String temp2 [] = temp.split(" ");
 					int arrive = Integer.parseInt(temp2[0]);
 					int address = Integer.parseInt(temp2[1]);
-					pairs.add(new Pair(arrive,address));
+					Pair temp3 = new Pair(arrive,address);
+					pairs.add(temp3);
 				}
 				Collections.sort(pairs,new ArrivalComparator());
 				for(int i = 0; i < numRequest; i++)

@@ -1,7 +1,7 @@
 import java.util.*;
 public class SstfScheduler implements DiskScheduler
 {
-	public List <Request> requests;
+	public ArrayList <Request> requests= new ArrayList<Request>();
 	public int start = 0; 
 	public int totalTime = 0;
 	public DiskSchedule sched;
