@@ -9,13 +9,12 @@ public class SchedulerFactory {
 		}else if ( code.equals("LOOK")) {
 			return new LookScheduler(headAddress);
 		} 
-		/* BONUS
+		// BONUS
 		else if (code.equals("CSCAN")){
-			return new CScanScheduler();
+			return new CScanScheduler(headAddress);
 		}else if (code.equals("CLOOK")){
-			return new CLookScheduler();
+			return new CLookScheduler(headAddress);
 		} 
-		*/
 		else {
 			throw new IllegalArgumentException("Invalid code for disk scheduler: " + code);//don't need to do this, but it is a good idea.
 		}

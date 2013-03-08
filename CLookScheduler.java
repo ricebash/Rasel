@@ -1,5 +1,5 @@
 import java.util.*;
-public class LookScheduler implements DiskScheduler
+public class CLookScheduler implements DiskScheduler
 {
 	public List <Request> requests = new ArrayList<Request>();
 	public int start = 0; 
@@ -10,7 +10,7 @@ public class LookScheduler implements DiskScheduler
 	public List<SeekTime> higherSet = new ArrayList<SeekTime>();
 	public List<SeekTime> lowerSet = new ArrayList<SeekTime>();
 	
-	public LookScheduler(int head)
+	public CLookScheduler(int head)
 	{
 		this.head = head;
 		sched = new DiskSchedule();
@@ -30,7 +30,7 @@ public class LookScheduler implements DiskScheduler
 	public DiskSchedule computeSchedule()
 	{
 		Collections.sort(higherSet, new SeekTimeComparator());
-		Collections.sort(lowerSet, new SeekTimeComparator());
+		Collections.sort(lowerSet, new RebersSeekTimeComparator());
 
 		for(int i = 0; i < higherSet.size(); ++i){
 			int index = higherSet.get(i).id;
@@ -56,6 +56,12 @@ public class LookScheduler implements DiskScheduler
 	class SeekTimeComparator implements Comparator<SeekTime>{
 		public int compare(SeekTime one, SeekTime two){
 			return one.st - two.st;
+		}
+	}
+
+	class RebersSeekTimeComparator implements Comparator<SeekTime>{
+		public int compare(SeekTime one, SeekTime two){
+			return two.st - one.st;
 		}
 	}
 

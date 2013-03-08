@@ -32,7 +32,7 @@ public class ScanScheduler implements DiskScheduler
 			int getIndex = 0;
 			for( int j = 0; j< requests.size(); j++)
 			{
-				System.out.println(head + " add " + requests.get(j).address); 
+				//System.out.println(head + " add " + requests.get(j).address); 
 				if(ascend)
 				{
 					if((requests.get(j).address >= head) && (requests.get(j).address - head <= closest))
@@ -52,7 +52,7 @@ public class ScanScheduler implements DiskScheduler
 					}
 				}
 			}
-			System.out.println("closest " + closest + " " + go);
+			//System.out.println("closest " + closest + " " + go);
 			if(go == true)
 			{
 				totalTime += closest;			
