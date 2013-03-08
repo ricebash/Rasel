@@ -20,6 +20,7 @@ public class ScheduleDisks
 				DiskSchedule order;
 				List<ServicedRequest> printable;
 				String [] request = input.split(" ");
+				System.out.println(request[0]);
 				int head = Integer.parseInt(request[1]);
 				sched = factory.createScheduler(request[0],head);
 				int numRequest = Integer.parseInt(sc.nextLine());
@@ -64,15 +65,15 @@ class ArrivalComparator implements Comparator<Pair>
 {
 	public int compare(Pair one, Pair two)
 	{
-		int comp = one.arrival - two.arrival;
-		if(comp == 0)
-		{
-			return -1; 
-		}
-		else
-		{
-			return comp;
-		}
+		return one.arrival - two.arrival;
+		// if(comp == 0)
+		// {
+		// 	return -1; 
+		// }
+		// else
+		// {
+		// 	return comp;
+		// }
 	}
 }
 
