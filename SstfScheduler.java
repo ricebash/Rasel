@@ -37,27 +37,27 @@ public class SstfScheduler implements DiskScheduler
 
 		return sched;
 	}
-}
 
-class ArrivalTimeComparator implements Comparator<SeekTime>{
-	public int compare(SeekTime one, SeekTime two){
-		return one.at - two.at;
+	class ArrivalTimeComparator implements Comparator<SeekTime>{
+		public int compare(SeekTime one, SeekTime two){
+			return one.at - two.at;
+		}
 	}
-}
 
-class SeekTimeComparator implements Comparator<SeekTime>{
-	public int compare(SeekTime one, SeekTime two){
-		return one.st - two.st;
+	class SeekTimeComparator implements Comparator<SeekTime>{
+		public int compare(SeekTime one, SeekTime two){
+			return one.st - two.st;
+		}
 	}
-}
 
-class SeekTime {
-	int st;
-	int id;
-	int at;
-	public SeekTime(int idThing, int seekTime, int arrivalTime){
-		id = idThing;
-		st = seekTime;
-		at = arrivalTime;
+	class SeekTime {
+		int st;
+		int id;
+		int at;
+		public SeekTime(int idThing, int seekTime, int arrivalTime){
+			id = idThing;
+			st = seekTime;
+			at = arrivalTime;
+		}
 	}
 }
