@@ -58,6 +58,7 @@ public class ScanScheduler implements DiskScheduler
 				totalTime += closest;			
 				sched.addServed(requests.get(getIndex),totalTime);
 				requests.remove(getIndex);
+				arrived.remove(arrived.indexOf(getIndex));
 				if(ascend)
 				{
 					head += closest;
@@ -69,13 +70,16 @@ public class ScanScheduler implements DiskScheduler
 			}
 			else
 			{
-				if(ascend)
+				if(arrived.size()>0)
 				{
-					head++;
-				}
-				else
-				{
-					head--;
+					if(ascend)
+					{
+						head++;
+					}
+					else
+					{
+						head--;
+					}
 				}
 				if(head == -1 || head == 2048)
 				{
