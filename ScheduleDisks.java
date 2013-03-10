@@ -7,6 +7,7 @@ public class ScheduleDisks
 		SchedulerFactory factory = new SchedulerFactory();
 		DiskScheduler sched;
 		Scanner sc = new Scanner(new FileReader("io-requests.txt"));
+		PrintStream out = new PrintStream("disk-schedules.txt");
 		while(true)
 		{
 			String input = sc.nextLine();
@@ -20,7 +21,7 @@ public class ScheduleDisks
 				DiskSchedule order;
 				List<ServicedRequest> printable;
 				String [] request = input.split(" ");
-				System.out.println(request[0]);
+				//out.print(request[0]);
 				int head = Integer.parseInt(request[1]);
 				sched = factory.createScheduler(request[0],head);
 				int numRequest = Integer.parseInt(sc.nextLine());
@@ -42,9 +43,9 @@ public class ScheduleDisks
 				printable = order.getRequestOrder();
 				for(int i = 0; i < printable.size(); i++)
 				{
-					System.out.print("R" + printable.get(i).getRequestId() + " " + printable.get(i).timeServiced() + " ");
+					out.print("R" + printable.get(i).getRequestId() + " " + printable.get(i).timeServiced() + " ");
 				}
-				System.out.print("\n" + order.averageResponseTime() + "\n");
+				out.print("\n" + order.averageResponseTime() + "\n");
 			}
 		}
 	}
