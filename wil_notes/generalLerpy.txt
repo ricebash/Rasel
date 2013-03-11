@@ -1,0 +1,9 @@
+Vector2 bluh(float t, Vector2 points[]){
+	//get the distance of every point to point thingy, then floor
+	//get the total thingy 
+	//lerp(t,a,b) = (1-t)a + t*b
+	//for every pair of points, I create an interval
+	//for every interval, I determine the time thing that I will insert the lerp
+
+	
+}

@@ -1,0 +1,9 @@
+firing
+create a list of counter = 50 bullets, separate radius and velocity
+if mouse down, firing is true
+if firing is true
+	-get the time, if a bullet has not been fired recently, fire new bullet (add to list)
+	-if a bullet has been fired, decrease counter, draw bullet on screen, add to list of bullet_status
+	-if counter = 0, pause for animation, reload the gun
+at anytime:
+check if bullet_status has gone offscreen or has hit an enemy: if yes, delete them

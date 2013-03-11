@@ -1,0 +1,41 @@
+class UniformGrid{
+	const float world_width, world_height;
+	const size_t cols, rows;
+	const float cell_width, cell_height; 
+	
+	vector<vector<Circle>> grid;
+	
+public:
+	UniformGrid(float world_width, float world_height, size_t cols, size_t rows):
+		world_width(world_width), world_height(world_height), cols(cols), rows(rows), cell_width(world_width//cols), cell_height(world_height/rows), grid(rows*cols){
+		
+		}
+		
+	void put(Circle &c){
+		size_t r = (size_t) c.center.x / cell_width, c = (size_t) c.center.y / cell_height;
+		
+		getCell(c,r).push_back(&c);
+	}
+	
+	vector<Circle*>& getCell(size_t c, size_t r){
+		return grid[cols * r + c];
+	}
+	
+	vector<Circle> getObjectsInRect(float centerX, float centerY, float w, float h){
+		vector<Circle*> ret;
+		
+		size_t 	x_min = size_t((centerX)),
+				x_max,
+				y_min,
+				y_max;
+		
+		for(size_t c = x_min; c <= xmax; ++c){
+			for (size_t r = ymin; r <= ymax; ++r){
+				auto &cell = getCell(c, nm r);
+				ret.insert(ret.end(),cell.begin(),cell.end());
+			}
+		}
+		
+		return ret;
+	}
+}

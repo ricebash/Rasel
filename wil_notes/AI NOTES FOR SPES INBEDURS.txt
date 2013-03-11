@@ -1,0 +1,11 @@
+AI NOTES FOR SPES INBEDURS
+
+Pursuit: (Dest to Source)normalize + length
+another way= 
+angle = w = cos'( ( u.dot(t) ) /|u|*|t| )
+//clamp the values
+
+wandering steer:
+make a circle in front of the thing
+pick a random point on the circle
+and that is the velocity of the thing

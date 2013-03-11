@@ -1,0 +1,40 @@
+class StateManagement :: public AppBasics {
+public:
+	class State {	
+		StateManager *parent;
+		friend class StateManager;
+		public:
+		enum State {blah blah blah}
+		virtual void draw() == 0;
+		virtual void update(float) == 0;
+		virtual void OnKeyUp(KE) == 0;
+		virtual void OnKeyDown(KE) == 0;	
+		protected:
+		StateManager getManager (return *parent)
+	}
+private:
+	
+public:
+	void draw() {
+		if(!states.empty()){
+			states.back()->draw();
+		}
+	}
+	void update(float dt) {
+		if(!states.empty()){
+			states.back()->update(dt);
+		}
+	}
+	void OnKeyDown(const KeyEvent &k){
+		if(!states.empty()){
+			auto s = states.back();
+			s->OnKeyDown(k);
+		}
+	}
+	void OnKeyUp(const KeyEvent &k){
+		if(!states.empty()){
+			auto s = states.back();
+			s->OnKeyUp(k);
+		}
+	}
+}

@@ -1,0 +1,50 @@
+Basic N-Body Algorithm
+
+The algorithm used for an N-Body simulation models the motion of N particles (or objects) subject to a particle-particle interaction. Each particle interacts with all other particles in the simulation, thus the computation is O(N2). For this tutorial, the interaction considered will be the gravitational force between the particles so that the simulation might represent the motion of stars in a galaxy. (The same algorithm can be used to model very different physics, for example, the motion of charged particles on a much smaller length scale.)
+
+The basic algorithm has two main steps. First, the total force on each particle resulting from the gravitational attraction to all other particles is calculated. Then each particles position and velocity are updated as result of this force using a simple integrator over some small timestep. Repeating this process results in a simulation of the motion of all of the particles (stars) within the system (galaxy).
+
+The formal equations and background are sufficiently discussed on Wikipedia (here and here) and will not be repeated. Instead, we will get right to the algorithm. With suitably defined arrays, etc., the entire (unoptimized) algorithm can be written in C with a few dozen lines of code.
+
+The following code loops over N particles, accumulating the acceleration on each particle resulting from the gravitational force of all others. Acceleration is related to force through the famous relation f = ma, where m is the mass of the particle. Each particle position and velocity are then advanced forward in time using a simple integrator. The process repeats to simulate the motion of the particles over time.
+
+1    for(i=0; i<n; i++) { /* Foreach particle "i" ... */
+2      ax=0.0;
+3      ay=0.0;
+4      az=0.0;
+Line 1 begins the loop over particles "i" and lines 2-4 initialize the acceleration vector that will be used to accumulate the per-particle acceleration.
+
+5      for(j=0; j<n; j++) { /* Loop over all particles "j" */
+6        dx=x[j]-x[i];
+7        dy=y[j]-y[i];
+8        dz=yz[j]-z[i];
+9        invr = 1.0/sqrt(dx*dx + dy*dy + dz*dz + eps);
+10       invr3 = invr*invr*invr;
+11       f=m[j]*invr3;
+12       ax += f*dx; /* accumulate the acceleration from gravitational attraction */
+13       ay += f*dy;
+14       az += f*dx;
+15     }
+Lines 5-15 is the inner loop over all particles "j" where we accumulate the acceleration imparted on particle "i". Note that the self-interaction is excluded implicitly since the distance vectors will be identically zero when i==j and the inverse distance is kept finite in line 9. (Particles do not feel a gravitational attraction to themselves, which is a good thing, since the force would be infinite according to the classical equations.) The steps within the inner loop are as follows.
+
+Lines 6-8 calculates distance vector between particle "j" and particle "i" is calculated.
+
+Lines 9-10 calculates the inverse distance (a scalar quantity) raised to the third power - this is what we need for the gravitational force equation. The parameter eps is the minimum distance squared for particle-particle interactions and its main purpose is to keep the simulation from crashing if particles wander too close together.
+
+Lines 11-14 calculates the contribution to the acceleration vector for particle "i". (Note that the f calculated in line 11 is not actually the force.)
+
+16     xnew[i] = x[i] + dt*vx[i] + 0.5*dt*dt*ax; /* update position of particle "i" */
+17     ynew[i] = y[i] + dt*vy[i] + 0.5*dt*dt*ay;
+18     znew[i] = z[i] + dt*vz[i] + 0.5*dt*dt*az;
+19     vx[i] += dt*ax; /* update velocity of particle "i" */
+20     vy[i] += dt*ay;
+21     vz[i] += dt*az;
+22   }
+Lines 16-21 update the position and velocity of particle "i" based on the total acceleration resulting from the gravitational force and using a simple integrator. This has the effect of advancing the simulation forward in time by a small timestep dt.
+
+23   for(i=0;i<n;i++) { /* copy updated positions back into original arrays */
+24     x[i] = xnew[i];
+25     y[i] = ynew[i];
+26     z[i] = znew[i];
+27   }
+Lines 23-27 the updated positions are copied back into the original arrays (x[], y[], z[]). This step is necessary since we are careful not to write back the updated particle positions into the original arrays (x[], y[], z[]) until ALL of the particle positions have been updated and stored in temporary arrays (xnew[], ynew[], znew[]). A variant of using temporary arrays is to use a "double-buffer" scheme where the particle positions used in the algorithm alternate between two sets of arrays. This issue is often overlooked with the result being that the force on the particles (accept for the first one in the list) is calculated with a mix of current and updated positions. For typical timesteps the error is not visually perceptible (the goal of many N-Body simulations is to create a nice looking demo, not science) but the results are not correct. Here, we will try to implement the algorithm correctly.

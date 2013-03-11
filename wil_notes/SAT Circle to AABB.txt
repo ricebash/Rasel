@@ -1,0 +1,49 @@
+Circle to AABB
+
+1. Find the closest point of the AABB to the circle (clamp)
+2. If the distance to 1 is greater than circle radius, then intersecting
+
+struct collision
+{
+	// will be the vector point to hold the center point of the cirle and //Rectangle
+	vector2 m_postion;
+	//will be for the half length and width of the rectangle
+	vector2 m_half;
+	// will be the radius of the circle
+	int Cradius;
+	collision();
+	// collision constuctor to hold the circle's center and radius
+	collision(vector2 center, int radius);
+	// collision constuctor to hold the rectangle center and halfs
+	collision(vector2 c, int h_length, int h_width);
+	//Boolean function to check if there is a collison
+	bool CircleAABB(collision cir, collision rect);
+};
+
+Now that you have the body of the collision struct set up, you need to fix the boolean function. In the function CircleAABB you will notice that we need to pass a collision cir object and a collision rectangle object in order to check for a collision.
+
+bool collision::CircleAABB(collision cir, collision rect)
+{
+	//xmax is to hold the max distance between the center
+	//and the edge in the x direction
+	int xmax= rect.m_postion.x + rect.m_half.x;
+	//ymax is to hold the max distance between the center
+	//and the edge in the y direction
+	int ymax= rect.m_postion.y + rect.m_half.y;
+	// condition checking if the circle has touch the rectangle
+	// in the x direction
+	if((abs(cir.m_postion.x) + cir.Cradius) < xmax)
+	{
+	//condition is false
+	return false;
+	}
+	// condition checking if the circle has touch the rectangle
+	// in the y direction
+	if((abs(cir.m_postion.y) + cir.Cradius) < ymax)
+	{
+	//condition is false
+	return false;
+	}
+	//conditions are false and circle did touch the square
+	return true;
+}

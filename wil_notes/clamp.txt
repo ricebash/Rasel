@@ -1,0 +1,7 @@
+T clamp (T v, T low, T high){
+	if (v <= low)
+		return low
+	if (v >= high)
+		return high
+	return v
+}

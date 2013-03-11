@@ -1,0 +1,21 @@
+obbs are represented by a center and half-extents
+
+pwede tayo mag-separating axis theorem
+
+bool testSataxis(vec axis, vec d, obb a, obb b){
+ const float
+	ra = abs(a.u * axis) + abs(a.v * axis)
+	rb = abs(b.u * axis) + abs(b.v * axis)
+ return abs(axis * d) <= ra + rb
+}
+
+bool sat(obb a, obb b){
+ vec d = b.center - a.center
+ return testSataxis(d, d, a, b) && 
+	testSataxis(a.u, d, a, b) && testSataxis(a.v, d, a, b)
+	testSataxis(b.u, d, a, b) && testSataxis(b.v, d, a, b)
+}
+
+bounce(){
+ //get the normal
+}

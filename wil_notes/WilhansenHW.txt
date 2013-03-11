@@ -1,0 +1,6 @@
+Make a simple Billiards simulator.
+
+1) Any ball configuration is ok (but have at least 8 balls + 1 cue ball)
+2) Implement the pockets
+3) Implement a simple cue ball launching UI
+4) Implement friction (the balls should eventually stop)

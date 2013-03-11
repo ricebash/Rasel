@@ -1,0 +1,12 @@
+f(x) = g(sin(x)) //range manipulation
+
+y - y0 = () (y1- y0)/(x1 - x0) ) * (x - x0), 	[x0, x1] => [y0, y1]
+f(x) = g (sin (x) ) E [PI, 2PI]
+
+f(x) - PI = PI/2 * (sin(x) + 1)
+f(x) = PI/2 * (sin(x) + 1) + PI
+	= ( ( PI * sin(x) ) / 2 ) + 3PI/2
+
+s(x) = sin(t(x)) //domain manipulation
+
+s(x) = sin(y * PI/2)

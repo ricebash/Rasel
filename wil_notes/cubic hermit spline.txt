@@ -1,0 +1,24 @@
+cubic hermit spline
+
+S = {P0, P1, P2, ..., PN}
+|S| = n
+F = { f0(t), ... }
+
+fi(0) = P1
+fi(1) = Pi+1
+
+fi(t) = at^3 + bt^2 + ct + d // a,b,c,d are vectors
+
+f'i(0) = f'i-1(1)
+f'i(1) = f'i+1(0)
+
+ex..
+fi(0) = d = Pi
+fi(1) = ai + bi + ci + di = Pi + 1
+f'i(0) = ci = 3ai+1 + 2bi+1 + ci
+f'i(1) = 3a + 2b + c  = Ci -1
+
+[0001][a] = [pi]
+[1111][b] = [pi+1]
+[0010][c] = [bluh]
+[3210][d] = [ci-1]

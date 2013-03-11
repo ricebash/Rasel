@@ -1,0 +1,32 @@
+reflect.n(i) = i - 2 proj.n(i)
+1) the normal should face the ball/object
+2) negate the normal if it doesn't
+3) the normal of circle-circle is other.center-circle.center (dir is O to C)
+
+need for the assumption that momentum is conserved.
+1) we get the vector components of the velocity with respect to the collision axis (proj the collision axis to the velocity)
+2) swap
+
+s and t are the velocities other other and this, respectively
+
+s' = proj.d(s)
+where d = center - center (collision axis)
+
+u = s' - s (some perpendicular line thingy)
+u + s = s'
+
+::swap s' with t'
+s = (s-s') + t'
+t = (t-t') + s'
+
+s'= ( s * d ) * d
+w is the distance of collision (the intersecting space)
+w = c.r + o.r - | c - o |
+
+check if w > 0 // we want it to be 0 or less to be not colliding
+
+
+
+o += d * w/2 
+c += -d * w/2
+
