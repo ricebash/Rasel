@@ -45,7 +45,7 @@ public class ScheduleDisks
 				{
 					out.print("R" + printable.get(i).getRequestId() + " " + printable.get(i).timeServiced() + " ");
 				}
-				out.print("\n" + order.averageResponseTime() + "\n");
+				out.printf("\n%.2f\n",order.averageResponseTime());
 			}
 		}
 	}

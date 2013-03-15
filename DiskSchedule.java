@@ -2,7 +2,7 @@ import java.util.*;
 public class DiskSchedule
 {
 	public List<ServicedRequest> served = new ArrayList<ServicedRequest>();
-	public int totalResponseTime;
+	public double totalResponseTime;
 	
 	public DiskSchedule()
 	{}
@@ -10,7 +10,7 @@ public class DiskSchedule
 	public void addServed(Request req,int time)
 	{
 		served.add(new ServicedRequest(req.id,time));
-		totalResponseTime += time - req.arrival;
+		totalResponseTime += (time - req.arrival);
 	}
 	
 	public List<ServicedRequest> getRequestOrder()

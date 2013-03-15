@@ -1,4 +1,4 @@
-import java.util.*;
+	import java.util.*;
 public class CLookScheduler implements DiskScheduler
 {
 	public List <Request> requests = new ArrayList<Request>();
@@ -31,18 +31,22 @@ public class CLookScheduler implements DiskScheduler
 	{
 		Collections.sort(higherSet, new SeekTimeComparator());
 		Collections.sort(lowerSet, new RebersSeekTimeComparator());
-
-		for(int i = 0; i < higherSet.size(); ++i){
-			int index = higherSet.get(i).id;
-			totalTime += higherSet.get(i).st;
-			sched.addServed(requests.get(index), totalTime);
-		}
-
-		for(int i = 0; i < lowerSet.size(); ++i){
-			int index = lowerSet.get(i).id;
-			totalTime += higherSet.get(i).st;
-			sched.addServed(requests.get(index), totalTime);
-		}
+		
+		//if(higherSet.size() > 0) {
+			for(int i = 0; i < higherSet.size(); ++i){
+				int index = higherSet.get(i).id;
+				totalTime += higherSet.get(i).st;
+				sched.addServed(requests.get(index), totalTime);
+			}
+		//}
+		
+		//if(lowerSet.size() > 0) {
+			for(int i = 0; i < lowerSet.size(); ++i){
+				int index = lowerSet.get(i).id;
+				totalTime += lowerSet.get(i).st;
+				sched.addServed(requests.get(index), totalTime);
+			}
+		//}
 
 		return sched;
 	}
