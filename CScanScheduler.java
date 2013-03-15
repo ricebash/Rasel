@@ -6,75 +6,61 @@ public class CScanScheduler implements DiskScheduler
 	public int totalTime = 0;
 	public DiskSchedule sched;
 	public int head;
-
-	public List<SeekTime> higherSet = new ArrayList<SeekTime>();
-	public List<SeekTime> lowerSet = new ArrayList<SeekTime>();
 	
 	public CScanScheduler(int head)
 	{
 		this.head = head;
+		
 		sched = new DiskSchedule();
 	}
 	
 	public void addRequest(int arrivalTime, int cylinderAddress)
 	{
 		requests.add(new Request(start,arrivalTime,cylinderAddress));
-
-		if( cylinderAddress > head )
-			higherSet.add(new SeekTime(start, Math.abs(cylinderAddress - head), arrivalTime ));
-		else lowerSet.add(new SeekTime(start, Math.abs(cylinderAddress - head), arrivalTime));
-
 		start++;
 	}
 
 	public DiskSchedule computeSchedule()
 	{
-		Collections.sort(higherSet, new SeekTimeComparator());
-		Collections.sort(lowerSet, new RebersSeekTimeComparator());
-		
-		for(int i = 0; i < higherSet.size(); ++i){
-			int index = higherSet.get(i).id;
-			totalTime += higherSet.get(i).st;
-			sched.addServed(requests.get(index), totalTime);
+		ArrayList<Integer> arrived = new ArrayList<Integer>();
+		boolean ascend = true;
+		int siz = requests.size();
+		while(requests.size() > 0)
+		{
+			boolean go = false;
+			int closest = 2048;
+			int getIndex = 2048;
+			for( int j = 0; j< requests.size(); j++)
+			{
+				//System.out.println(head + " add " + requests.get(j).address); 
+				if((requests.get(j).address >= head) && (requests.get(j).address - head <= closest))
+				{
+					if(requests.get(j).arrival <= totalTime)
+					{
+						getIndex = j;
+						closest =  requests.get(j).address - head;
+						go = true;
+					}
+				}
+			}
+			//System.out.println("closest " + closest + " " + go);
+			if(go == true)
+			{
+				totalTime += closest;			
+				sched.addServed(requests.get(getIndex),totalTime);
+				requests.remove(getIndex);
+				head += closest;
+			}
+			else
+			{
+				head++;
+				if(head == 2048)
+				{
+					head = 0;
+				}
+					totalTime++;
+			}
 		}
-
-		totalTime += 2047;
-
-		for(int i = 0; i < lowerSet.size(); ++i){
-			int index = lowerSet.get(i).id;
-			totalTime += higherSet.get(i).st;
-			sched.addServed(requests.get(index), totalTime);
-		}
-
 		return sched;
-	}
-
-	class ArrivalTimeComparator implements Comparator<SeekTime>{
-		public int compare(SeekTime one, SeekTime two){
-			return one.at - two.at;
-		}
-	}
-
-	class SeekTimeComparator implements Comparator<SeekTime>{
-		public int compare(SeekTime one, SeekTime two){
-			return one.st - two.st;
-		}
-	}
-
-	class RebersSeekTimeComparator implements Comparator<SeekTime>{
-		public int compare(SeekTime one, SeekTime two){
-			return two.st - one.st;
-		}
-	}
-
-	class SeekTime {
-		int st;
-		int id;
-		int at;
-		public SeekTime(int idThing, int seekTime, int arrivalTime){
-			id = idThing;
-			st = seekTime;
-			at = arrivalTime;
-		}
 	}
 }
