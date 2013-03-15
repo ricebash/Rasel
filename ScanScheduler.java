@@ -24,12 +24,12 @@ public class ScanScheduler implements DiskScheduler
 	{
 		ArrayList<Integer> arrived = new ArrayList<Integer>();
 		boolean ascend = true;
-		while(requests.size() > 0 || arrived.size() >0)
+		int siz = requests.size();
+		while(requests.size() > 0)
 		{
 			boolean go = false;
-			int i = 0;
 			int closest = 2048;
-			int getIndex = 0;
+			int getIndex = 2048;
 			for( int j = 0; j< requests.size(); j++)
 			{
 				//System.out.println(head + " add " + requests.get(j).address); 
@@ -37,18 +37,24 @@ public class ScanScheduler implements DiskScheduler
 				{
 					if((requests.get(j).address >= head) && (requests.get(j).address - head <= closest))
 					{
-						getIndex = j;
-						closest =  requests.get(j).address - head;
-						go = true;
+						if(requests.get(j).arrival <= totalTime)
+						{
+							getIndex = j;
+							closest =  requests.get(j).address - head;
+							go = true;
+						}
 					}
 				}
 				else
 				{
 					if((requests.get(j).address < head) && (head - requests.get(j).address <= closest))
 					{
-						getIndex = j;
-						closest = head - requests.get(j).address;
-						go = true;
+						if(requests.get(j).arrival <= totalTime)
+						{
+							getIndex = j;
+							closest = head - requests.get(j).address;
+							go = true;
+						}
 					}
 				}
 			}
@@ -58,7 +64,6 @@ public class ScanScheduler implements DiskScheduler
 				totalTime += closest;			
 				sched.addServed(requests.get(getIndex),totalTime);
 				requests.remove(getIndex);
-				arrived.remove(arrived.indexOf(getIndex));
 				if(ascend)
 				{
 					head += closest;
@@ -70,8 +75,8 @@ public class ScanScheduler implements DiskScheduler
 			}
 			else
 			{
-				if(arrived.size()>0)
-				{
+				//if((sched.served.size()-1) >= currIndex)
+				//{
 					if(ascend)
 					{
 						head++;
@@ -80,7 +85,7 @@ public class ScanScheduler implements DiskScheduler
 					{
 						head--;
 					}
-				}
+				//}
 				if(head == -1 || head == 2048)
 				{
 					ascend = !ascend;
@@ -95,7 +100,7 @@ public class ScanScheduler implements DiskScheduler
 				}
 				else
 				{
-				totalTime++;
+					totalTime++;
 				}
 			}
 		}
