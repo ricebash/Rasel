@@ -24,11 +24,10 @@ public class SstfScheduler implements DiskScheduler
 	}
 
 	public DiskSchedule computeSchedule()
-	{
-		Collections.sort(seekTimeList, new SeekTimeComparator());
+	{/*
 		Collections.sort(seekTimeList, new ArrivalTimeComparator());
-
 		for(int i = 0; i < start; ++i){
+			
 			int index = seekTimeList.get(i).id;
 			//System.out.println("R"+index+"::"+seekTimeList.get(i).st);
 			totalTime += seekTimeList.get(i).st;
@@ -36,6 +35,48 @@ public class SstfScheduler implements DiskScheduler
 		}
 
 		return sched;
+		*/
+		int siz = requests.size();
+		while(requests.size() > 0)
+		{
+			boolean go = false;
+			int closest = 2048;
+			int getIndex = 2048;
+			for( int j = 0; j< requests.size(); j++)
+			{
+				//System.out.println(head + " add " + requests.get(j).address); 
+				if((Math.abs(requests.get(j).address - head) <= closest))
+				{
+					if(requests.get(j).arrival <= totalTime)
+					{
+						getIndex = j;
+						closest =  Math.abs(requests.get(j).address - head);
+						go = true;
+					}
+				}
+			}
+			//System.out.println("closest " + closest + " " + go);
+			if(go == true)
+			{
+				totalTime += closest;			
+				sched.addServed(requests.get(getIndex),totalTime);
+				if(requests.get(getIndex).address > head)
+				{
+					head +=closest;
+				}
+				else
+				{
+					head -= closest;
+				}
+				requests.remove(getIndex);
+			}
+			else
+			{
+				totalTime++;
+			}
+		}
+		return sched;
+	
 	}
 
 	class ArrivalTimeComparator implements Comparator<SeekTime>{
@@ -44,19 +85,13 @@ public class SstfScheduler implements DiskScheduler
 		}
 	}
 
-	class SeekTimeComparator implements Comparator<SeekTime>{
-		public int compare(SeekTime one, SeekTime two){
-			return one.st - two.st;
-		}
-	}
-
 	class SeekTime {
-		int st;
+		int ct;
 		int id;
 		int at;
-		public SeekTime(int idThing, int seekTime, int arrivalTime){
+		public SeekTime(int idThing, int cylinderAddress, int arrivalTime){
 			id = idThing;
-			st = seekTime;
+			ct = cylinderAddress;
 			at = arrivalTime;
 		}
 	}
